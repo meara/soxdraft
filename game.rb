@@ -4,12 +4,13 @@ class Game
 
   attr_reader :series
 
-  def initialize(date, time, away, series)
+  def initialize(date, time, away)
     @date = date
     @time = time
     @home = :chi
     @away = away
-    @series = series
+    @series_id = nil
+    @season_id = nil
     @up = nil
     @down = nil
   end

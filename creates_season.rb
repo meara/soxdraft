@@ -6,6 +6,13 @@ class CreatesSeason
     @filename = filename
   end
 
+  def create
+    #read in data from csv file
+      #create games
+    #read games and use to create series
+      #assign games to series
+  end
+
   def read_in_games
     file = File.new(filename)
     header, game_lines = file.read.split("\n")
@@ -20,11 +27,4 @@ class CreatesSeason
 end
 
 create_season = CreatesSeason.new('sample_draft.csv')
-
-
-# def load_file
-#   file = File.new(filename)
-#   total_string, *item_data = file.read.split("\n")
-#   file.close
-#   {total_string: total_string, item_data: item_data}
-# end
+create_season.create
