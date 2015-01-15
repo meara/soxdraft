@@ -7,23 +7,31 @@ class CreatesSeason
   end
 
   def create
-    #read in data from csv file
-      #create games
-    #read games and use to create series
-      #assign games to series
-  end
-
-  def read_in_games
-    file = File.new(filename)
-    header, game_lines = file.read.split("\n")
-    file.close
-    params = {date: datify(date), time: time, away: away.to_sym}
+    @season = Season.new(2014)
+    @season.create_games
+    @season.sort_by_date!
+    @season.assign_series
   end
 
   def datify(datestring)
     month, day, year = datestring.split('/')
     Date.new(year,month,day)
   end
+
+  def create_games
+    CSV.foreach(@filename, headers: true, header_converters: :symbol) do |row|
+      raise "Invalid team" unless MLB.include(row[away].to_sym)
+      @season.games << Game.new(datify(row[date]),row[time].to_i,row[away].to_sym)
+    end
+  end
+
+  def sort_by_date!
+    @season.games.sort! { |a,b| a.date <=> b.date}
+  end
+
+  def assign_series
+  end
+  
 end
 
 create_season = CreatesSeason.new('sample_draft.csv')
